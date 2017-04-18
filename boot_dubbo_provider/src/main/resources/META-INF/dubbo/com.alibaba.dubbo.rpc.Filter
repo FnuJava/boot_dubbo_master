@@ -1,0 +1,1 @@
+loginFilter=com.boot.dubbo.provider.filter.LoginFilter
