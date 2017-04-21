@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ImportResource;
 @ComponentScan("com.boot.dubbo")
 @ImportResource("classpath:dubbo_provider.xml")
 public class ProviderApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(ProviderApplication.class, args);
-  }
+	  public static void main(String[] args) {
+		  SpringApplication.run(ProviderApplication.class, args);
+	  }
 }
