@@ -9,13 +9,17 @@
     <module>boot_dubbo_service</module>
     <module>boot_dubbo_provider</module>
     <module>boot_dubbo_consumer</module>
+    <module>boot_dubbo_entity</module>
+    <module>boot_dubbo_common</module>
   </modules>
   
     <properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	    <java.version>1.7</java.version>
+	    <java.version>1.8</java.version>
 	    <spring-boot-dubbo.version>1.5.2.RELEASE</spring-boot-dubbo.version>
+	    <cglib.version>3.2.4</cglib.version>
+	    <jacksonAsl.version>1.9.13</jacksonAsl.version>
   	</properties>
   
    <parent>
@@ -46,12 +50,11 @@
 	</dependency>
 	
 	
-	<!-- groupId和version看你自己打包是什么名字 这边就是啥 -->
+	<!-- groupId和version看你自己打包是什么名�? 这边就是�? -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>spring-boot-starter-dubbo</artifactId>
-      <version>${spring-boot-dubbo.version}</version>
-      <optional>true</optional>
+      <version>1.5.2.RELEASE</version>
     </dependency>
     
     <dependency>

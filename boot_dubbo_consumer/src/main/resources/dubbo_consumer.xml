@@ -3,11 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-
-
-  
+   
     <!-- 生成远程服务代理，可以像使用本地bean一样使用userService -->  
-    <dubbo:reference id="userService"   interface="com.boot.dubbo.service.user.UserService" />  
-    
+    <dubbo:reference id="userService"   interface="com.boot.dubbo.service.userRight.UserService" timeout="300000" />
+    <dubbo:reference id="dictService"   interface="com.boot.dubbo.service.userRight.DictService" timeout="300000" />  
+    <dubbo:reference id="loginLogService"   interface="com.boot.dubbo.service.userRight.LoginLogService" timeout="300000" />  
+    <dubbo:reference id="loginService"   interface="com.boot.dubbo.service.userRight.LoginService" timeout="300000" />  
+    <dubbo:reference id="menuService"   interface="com.boot.dubbo.service.userRight.MenuService" timeout="300000" />  
+    <dubbo:reference id="roleMenuService"   interface="com.boot.dubbo.service.userRight.RoleMenuService" timeout="300000" />  
+    <dubbo:reference id="roleService"   interface="com.boot.dubbo.service.userRight.RoleService" timeout="300000" />  
+    <dubbo:reference id="userRoleMenuService"   interface="com.boot.dubbo.service.userRight.UserRoleService" timeout="300000" />  
+    <dubbo:reference id="webLogService"   interface="com.boot.dubbo.service.userRight.WebLogService" timeout="300000" />  
     
 </beans>

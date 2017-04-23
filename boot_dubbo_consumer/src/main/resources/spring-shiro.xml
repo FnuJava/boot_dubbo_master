@@ -98,7 +98,7 @@
                     /unauthorized                                <!-- 未授权处理页 -->        
                 </prop>
                 <prop key="org.apache.shiro.authz.UnauthenticatedException">
-                    /user-web/login                             <!-- 身份没有验证 -->
+                    /user/login                             <!-- 身份没有验证 -->
                 </prop>
             </props>
         </property>

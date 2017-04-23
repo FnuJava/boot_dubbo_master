@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.boot.dubbo.service.user.UserService;
 
-@Service(protocol = { "rest", "dubbo" })
+//@Service(protocol = { "rest", "dubbo" })
 @Path("user")
 public class UserServiceImpl implements UserService {
 	
