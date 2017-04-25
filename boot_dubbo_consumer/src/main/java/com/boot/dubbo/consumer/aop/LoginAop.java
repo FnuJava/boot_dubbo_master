@@ -3,6 +3,8 @@ package com.boot.dubbo.consumer.aop;
 import com.boot.dubbo.common.core.IdGenerator;
 import com.boot.dubbo.common.util.ServletUtil;
 import com.boot.dubbo.entity.LoginLog;
+import com.boot.dubbo.entity.SysLoginLog;
+import com.boot.dubbo.service.ISysLoginLogService;
 import com.boot.dubbo.service.userRight.LoginLogService;
 import com.google.common.base.Strings;
 
@@ -30,7 +32,7 @@ public class LoginAop {
     private Logger logger = LoggerFactory.getLogger(LoginAop.class);
 
     @Resource
-    private LoginLogService loginLogService;
+    private ISysLoginLogService loginLogService;
 
     @Pointcut(value="execution(* com.boot.dubbo.consumer.controller.userRight.LoginController.doLogin(..))))")
     private void loginLog() {
@@ -63,7 +65,7 @@ public class LoginAop {
 
     private void writeLoginLog(String status,String msg,String account) {
         String id = IdGenerator.getInstance().nextId();
-        LoginLog loginLog = new LoginLog();
+        SysLoginLog loginLog = new SysLoginLog();
         loginLog.setLoginLogId(id);
         loginLog.setStatus(status);
         loginLog.setLoginAccount(account);

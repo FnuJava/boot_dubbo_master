@@ -8,7 +8,7 @@ import com.boot.dubbo.entity.WebLog;
 
 public interface WebLogService {
 
-     void add(WebLog webLog);
+    void add(WebLog webLog);
 
     void delete(String[] webLogIds);
 
