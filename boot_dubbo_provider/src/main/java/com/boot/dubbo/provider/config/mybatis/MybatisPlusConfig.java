@@ -1,15 +1,18 @@
-package com.boot.dubbo.provider.config;
+package com.boot.dubbo.provider.config.mybatis;
 
 import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ObjectUtils;
@@ -18,13 +21,20 @@ import org.springframework.util.StringUtils;
 import com.baomidou.mybatisplus.MybatisConfiguration;
 import com.baomidou.mybatisplus.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.enums.DBType;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.mapper.AutoSqlInjector;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
+@PropertySource("classpath:jdbc.properties")
+@MapperScan("com.boot.dubbo.provider.mapper")
 public class MybatisPlusConfig {
+	
+	@Value("${spring.datasource.type}")  
+    private Class<? extends DataSource> dataSourceType;  
+	
 	@Autowired
 	private DataSource dataSource;
 
@@ -57,6 +67,7 @@ public class MybatisPlusConfig {
 	@Bean
 	public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {
 		MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();
+		
 		mybatisPlus.setDataSource(dataSource);
 		mybatisPlus.setVfs(SpringBootVFS.class);
 		if (StringUtils.hasText(this.properties.getConfigLocation())) {
@@ -66,17 +77,7 @@ public class MybatisPlusConfig {
 		if (!ObjectUtils.isEmpty(this.interceptors)) {
 			mybatisPlus.setPlugins(this.interceptors);
 		}
-		// MP 全局配置，更多内容进入类看注释
-		GlobalConfiguration globalConfig = new GlobalConfiguration();
-		globalConfig.setDbType(DBType.MYSQL.name());//数据库类型
-		// ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
-		globalConfig.setIdType(2);
-		//MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true) 开启，该配置可以无。
-		//globalConfig.setDbColumnUnderline(true);
-		mybatisPlus.setGlobalConfig(globalConfig);
 		MybatisConfiguration mc = new MybatisConfiguration();
-		// 对于完全自定义的mapper需要加此项配置，才能实现下划线转驼峰
-		//mc.setMapUnderscoreToCamelCase(true);
 		mc.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
 		mybatisPlus.setConfiguration(mc);
 		if (this.databaseIdProvider != null) {
@@ -91,6 +92,10 @@ public class MybatisPlusConfig {
 		if (!ObjectUtils.isEmpty(this.properties.resolveMapperLocations())) {
 			mybatisPlus.setMapperLocations(this.properties.resolveMapperLocations());
 		}
+		//ID自增
+		GlobalConfiguration global = new GlobalConfiguration(new AutoSqlInjector());
+		global.setIdType(IdType.AUTO.getKey());
+		mybatisPlus.setGlobalConfig(global);
 		return mybatisPlus;
 	}
 }
